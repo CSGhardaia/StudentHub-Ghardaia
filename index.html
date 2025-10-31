@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>صفحة ترحيب - خمس لغات</title>
+    <style>
+      :root {
+        --bg: #000;
+        --text: #fff;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        background: var(--bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .welcome-wrap {
+        text-align: center;
+        user-select: none;
+        padding: 2rem;
+      }
+
+      .welcome {
+        font-size: clamp(2rem, 6vw, 4.5rem);
+        color: var(--text);
+        letter-spacing: 0.02em;
+        text-shadow: 0 0 6px rgba(255, 255, 255, 0.12),
+          0 0 16px rgba(255, 255, 255, 0.08), 0 0 30px rgba(255, 255, 255, 0.04);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        transition: opacity 220ms linear, transform 220ms ease;
+        will-change: opacity, transform;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* small language hint under the main text */
+      .lang {
+        margin-top: 0.6rem;
+        font-size: clamp(0.9rem, 1.4vw, 1.25rem);
+        color: rgba(255, 255, 255, 0.8);
+        text-shadow: none;
+        opacity: 0.9;
+      }
+
+      /* Fade-out class used when switching text to make the transition smooth */
+      .fade-out {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      .fade-in {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Respect users who prefer reduced motion */
+      @media (prefers-reduced-motion: reduce) {
+        .welcome {
+          transition: none;
+        }
+      }
+
+      /* Make sure the content remains accessible on small screens */
+      @media (max-width: 420px) {
+        .welcome {
+          font-size: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="welcome-wrap" role="region" aria-label="رسالة ترحيب">
+      <div id="welcomeText" class="welcome" aria-live="polite">مرحبا</div>
+      <div id="langLabel" class="lang" aria-hidden="true">العربية</div>
+    </div>
+
+    <script>
+      (function () {
+        // Five welcome messages with their language labels
+        const messages = [
+          { text: "مرحباً بك", lang: "العربية", dir: "rtl" },
+          { text: "ⴰⵣⵓⵍ ⴼⵍⴰⵡⵏ", lang: "الامازيعية", dir: "ltr" },
+          { text: "Welcome", lang: "English", dir: "ltr" },
+          { text: "Bienvenue", lang: "Français", dir: "ltr" },
+          { text: "¡Bienvenido!", lang: "Español", dir: "ltr" },
+        ];
+
+        const elText = document.getElementById("welcomeText");
+        const elLang = document.getElementById("langLabel");
+
+        let idx = 0;
+        const intervalMs = 500; // every half second
+
+        // Apply initial direction
+        document.documentElement.dir = messages[0].dir;
+
+        // Switch function with fade animation
+        function showNext() {
+          // compute next index
+          idx = (idx + 1) % messages.length;
+          const next = messages[idx];
+
+          // apply fade-out
+          elText.classList.add("fade-out");
+          elLang.classList.add("fade-out");
+
+          // after short delay update text then fade-in
+          setTimeout(() => {
+            // update direction (RTL vs LTR) for proper alignment/screen readers
+            document.documentElement.dir = next.dir;
+
+            elText.textContent = next.text;
+            elText.setAttribute(
+              "lang",
+              next.lang === "العربية"
+                ? "ar"
+                : next.lang === "الامازيغية"
+                ? "de"
+                : next.lang === "Français"
+                ? "fr"
+                : next.lang === "Español"
+                ? "es"
+                : "en"
+            );
+
+            elLang.textContent = next.lang;
+
+            // swap classes for fade-in
+            elText.classList.remove("fade-out");
+            elText.classList.add("fade-in");
+
+            elLang.classList.remove("fade-out");
+            elLang.classList.add("fade-in");
+
+            // remove fade-in after it finished so next cycle can reapply
+            setTimeout(() => {
+              elText.classList.remove("fade-in");
+              elLang.classList.remove("fade-in");
+            }, 240);
+          }, 120); // small gap to let fade-out be noticeable before swapping
+        }
+
+        // Start interval
+        const timer = setInterval(() => {
+          showNext();
+          // if reached last language, redirect after short pause
+          if (idx === messages.length - 1) {
+            setTimeout(() => {
+              clearInterval(timer);
+              window.location.href = "Home.html"; // ← غيّرها لمسارك
+            }, intervalMs);
+          }
+        }, intervalMs);
+
+        // Accessibility: allow pausing animation on keyboard focus or on hover
+        [elText, elLang].forEach((node) => {
+          node.addEventListener("mouseenter", () => clearInterval(timer));
+          node.addEventListener("focus", () => clearInterval(timer));
+        });
+
+        // For screen readers, set an initial lang attribute
+        elText.setAttribute("lang", "ar");
+
+        // Expose a small API for quick customization from console if needed
+        window.__welcome = {
+          messages,
+          intervalMs,
+        };
+      })();
+    </script>
+  </body>
+</html>
