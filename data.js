@@ -8,7 +8,9 @@
        chDescription:"any description",
        chDrive:"https://drive.google.com/file/d/1yFloJQm_Ks4B5dL-H5iiJYGX0wI5kHzl/view"
       },
-      chapter2: "Lexical Analysis",
+      chapter2:{ chName:"Lexical Analysis",
+      chDescription:"",
+       chDrive:"https://drive.google.com/file/d/1dMRNu2f28NwF4w_xiMv9lo5X1kjhLR4k/view?usp=drive_link"},
       chapter3: "Syntax Analysis",
       chapter4: "Code Generation",
     },
@@ -273,3 +275,4 @@ export const courseData = [
     progress: 30,
   },
 ];
+
