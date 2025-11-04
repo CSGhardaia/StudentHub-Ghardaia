@@ -96,7 +96,7 @@ export const courseData = [
       chapter2: {
         chName: "Lexical Analysis",
         chDescription: "Tokenization and lexical analyzer design.",
-        chDrive: ""
+        chDrive: "https://drive.google.com/file/d/1dMRNu2f28NwF4w_xiMv9lo5X1kjhLR4k/view?usp=drive_link"
       },
       chapter3: {
         chName: "Syntax Analysis",
@@ -110,7 +110,7 @@ export const courseData = [
       },
     },
     credits: 3,
-    progress: 20,
+    progress: 40,
   },
   {
     name: "Economics",
