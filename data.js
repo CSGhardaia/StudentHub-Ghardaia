@@ -101,7 +101,7 @@ export const courseData = [
       chapter3: {
         chName: "Syntax Analysis",
         chDescription: "Parsing techniques and grammar analysis.",
-        chDrive: ""
+        chDrive: "https://drive.google.com/file/d/1n13dhsK9-VSGruLKUmjrrPxsCz6up_uX/view"
       },
       chapter4: {
         chName: "Code Generation",
@@ -110,7 +110,7 @@ export const courseData = [
       },
     },
     credits: 3,
-    progress: 40,
+    progress: 60,
   },
   {
     name: "Economics",
