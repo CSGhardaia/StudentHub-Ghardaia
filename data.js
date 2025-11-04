@@ -95,7 +95,7 @@ export const courseData = [
       },
       chapter2: {
         chName: "Lexical Analysis",
-        chDescription: "Tokenization and lexical analyzer design.",
+        chDescription: "Tokenization and lexical analyzer design",
         chDrive: "https://drive.google.com/file/d/1dMRNu2f28NwF4w_xiMv9lo5X1kjhLR4k/view?usp=drive_link"
       },
       chapter3: {
@@ -275,5 +275,6 @@ export const courseData = [
     progress: 30,
   },
 ];
+console.log("✅ data.js loaded");
 
 
