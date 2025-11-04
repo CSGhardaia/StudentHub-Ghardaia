@@ -15,7 +15,7 @@
       chapter4: "Code Generation",
     },
     credits: 6,
-    progress: 25,
+    progress: 45,
   },
   {
     name: "Economics",
@@ -275,4 +275,5 @@ export const courseData = [
     progress: 30,
   },
 ];
+
 
